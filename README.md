@@ -3,13 +3,20 @@ Simple Client-Server database
 
 
 
-Compile:
-on root: 
+# Compile:
+
+on root:
+
 mkdir build 
+
 cd build 
+
 cmake ..
+
 cmake --build .
 
-Run: 
+# Run: 
+
 ./server.exe
+
 ./client.exe
