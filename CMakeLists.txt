@@ -9,13 +9,10 @@ project(
   LANGUAGES CXX)
 
 include_directories(include)
-
-#add_library(mylib my_lib.cpp my_lib.hpp)
 add_executable(client client.cpp)
 
+
+include_directories(include)
 add_executable(server server.cpp database.cpp)
 
-
-
-#target_link_libraries(main PRIVATE mylib)
 

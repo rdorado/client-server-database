@@ -2,10 +2,9 @@
 #include <sys/socket.h>
 #include <iostream>
 #include <unistd.h>
-
 #include <string.h>
 
-#define PORT 8888 
+#include "defs.h"
 
 #include <chrono>
 using namespace std::chrono;
@@ -50,17 +49,30 @@ std::string send_message(std::string message)
  Here we put the logic to test/check answer
  */
 void test(){
-
   milliseconds start = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
-  int rep = 3000;
-  for (int i=1;i<=rep;i++)
+  int rep = 30000;
+  srand(time(0));
+  for (int i=0;i<rep;i++)
   {
-    
-	std::string result = send_message(std::to_string(i));	
+    int num = 1 + rand() % 500000;
+	
+	std::string result = send_message(std::to_string(Operation::INSERT)+std::to_string(num));	
 	
   }
   milliseconds end = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
-  std::cout << "Performed " << rep << " operations. Time spent: " << (end.count() - start.count()) << " ms." << std::endl;	
+  std::cout << "Test 1, insertions. Performed " << rep << " operations. Time spent: " << (end.count() - start.count()) << " ms." << std::endl;
+
+  rep = 30000;
+  start = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+  for (int i=0;i<rep;i++)
+  {
+    int num = 1 + rand() % 500000;
+	
+	std::string result = send_message(std::to_string(Operation::QUERY)+std::to_string(num));	
+	
+  }
+  end = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+  std::cout << "Test 2, search. Performed " << rep << " operations. Time spent: " << (end.count() - start.count()) << " ms." << std::endl;
 }
 
 void check(){

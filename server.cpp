@@ -7,13 +7,14 @@
 #include <iostream>
 
 #include "database.h"
+#include "defs.h"
 
 #define TRUE   1 
-#define PORT 8888 
 #define MAX_CLIENTS 30 
 
 
-Database* database = new ArrayDatabase();
+Database* database = new TreeDatabase();
+//Database* database = new ArrayDatabase();
 
 const char* process_input(char* input)
 {
@@ -22,10 +23,18 @@ const char* process_input(char* input)
 	database->check_status();
   }
   else {
-    int t = stoi(data);
-    database->insert(t);	  
+	int op_id = stoi(data.substr(0, 1));
+	int dat = stoi(data.substr(1));
+    Operation op = static_cast<Operation>(op_id);
+	if (op == Operation::INSERT)
+	{
+	  database->insert(dat);	
+	}
+    else if (op == Operation::QUERY)
+	{
+		bool found = database->query(dat);
+	}
   }
-  
   const char* response = "OK";
   return response;
 }
